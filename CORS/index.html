@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
+</head>
+<body>
+    <input id="a" type="text" placeholder="first value"></input>
+    <input id="b" type="text" placeholder="second value"></input>
+    <button onClick="reqSum()">Sum</button>
+
+    <script>
+        function reqSum() {
+            const a = document.getElementById("a").value
+            const b = document.getElementById("b").value
+            axios.post("http://localhost:3000/sum", {
+                a,
+                b
+            })
+            .then(res => {
+                console.log(res.data)
+            })
+        }
+    </script>
+</body>
+</html>
