@@ -1,0 +1,35 @@
+import {useState, useEffect} from 'react'
+
+function useFetch(url) {
+  const [responseJSON, setResponseJSON] = useState(null)
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    let shouldCancel = false
+
+    const callFetch = async () => {
+      setIsLoading(true)
+
+      try {
+        const res = await fetch(url)
+        const data = await res.json()
+        if(shouldCancel) return
+        setResponseJSON(data)
+        setError(null)
+      } catch (newError) {
+        if(shouldCancel) return
+        setError(newError)
+        setResponseJSON(null)
+      }
+      setIsLoading(false)
+    }
+    callFetch()
+    return () => (shouldCancel = true)
+  }, [url])
+  return {
+    responseJSON,
+    isLoading,
+    error
+  }
+}
